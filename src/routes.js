@@ -8,12 +8,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 function AppRoutes() {
     return (
         <BrowserRouter>
-            <Cabecalho />
+           <Cabecalho />
             <Container>
-                <Routes>
-                    <Route path="/" element={<Inicio />}></Route>
-                    <Route path="/favoritos" element={<Favoritos />}></Route>
-                </Routes>
+                <FavoritosProvider>
+                    <Routes>
+                        <Route path="/" element={<Inicio />}></Route>
+                        <Route path="/favoritos" element={<Favoritos />}></Route>
+                    </Routes>
+                </FavoritosProvider>
             </Container>
             <Rodape />
         </BrowserRouter>

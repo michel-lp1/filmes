@@ -1,37 +1,24 @@
-import { createContext, useState } from "react";
+import Banner from 'components/Banner';
+import Card from 'components/Card';
+import Titulo from 'components/Titulo';
+import { useFavoritoContext } from 'contextos/Favoritos';
+import styles from './Favoritos.module.css';
 
-export const FavoritosContext = createContext();
-FavoritosContext.displayName = "Favoritos";
-
-export default function FavoritosProvider({ children }) {
-    const [favorito, setFavorito] = useState([]);
-
+function Favoritos() {
+    const { favorito } = useFavoritoContext();
     return (
-        <FavoritosContext.Provider
-        value={{favorito, setFavorito }}>
-            {children}
-        </FavoritosContext.Provider>
+        <>
+            <Banner imagem='favoritos' />
+            <Titulo>
+                <h1>Meus Favoritos</h1>
+            </Titulo>
+            <section className={styles.container}>
+                {favorito.map((fav) => {
+                    return <Card {...fav} key={fav.id} />
+                })}
+            </section>
+        </>
     )
 }
 
-export function useFavoritoContext(){
-    const { favorito, setFavorito } = useContext(FavoritosContext);
-
-    function adicionarFavorito(novoFavorito) {
-        const favoritoRepetido = favorito.some(item => item.id === novoFavorito.id)
-
-        let novaLista = [...favorito];
-
-        if(!favoritoRepetido) {
-            novalista.push(novoFavorito);
-            return setFavorito(novaLista);
-        }
-
-        novaLista.slice(novaLista.indexOf(novoFavorito), 1);
-        return setFavorito(novaLista);
-    }
-    return {
-        favorito,
-        adicionarFavorito
-    }
-}
+export default Favoritos;
